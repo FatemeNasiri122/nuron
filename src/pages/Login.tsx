@@ -41,19 +41,20 @@ const Login = (props: Props) => {
                         "Email address must be a valid address",
                         },
                       })} />
-                      {errors.email?.message && (
-                            <small className="block text-[red]">{errors.email.message}</small>
+                      {errors?.email?.message && (
+                            <small className="block text-[red]">{errors?.email?.message}</small>
                        )}
                       <label className="dark:text-color-body text-color-light-body pt-4" htmlFor="">Password</label>
                       <input type="password" className='input'
                       {...register("password", {
                         required: "Password is required"})} 
                       />
-                      {errors.password?.message && (
-                            <small className="block text-[red]">{errors.password.message}</small>
+                      {errors?.password?.message && (
+                            <small className="block text-[red]">{errors?.password?.message}</small>
                        )}   
-                      <div className="mt-6">
-                          <Checkbox {...register("remember")} className='text-color-light-body dark:text-color-body text-xs'>Remember me leter</Checkbox>
+                      <div className="flex items-center mb-4">
+                          <input {...register("remember")} id="default-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
+                        <label htmlFor="default-checkbox" className="ml-2 text-sm dark:text-color-body text-color-light">Remember me later</label>
                       </div>
                       <div className="flex mt-6">
                           <button type="submit" className="w-[90px] h-[45px] bg-color-primary transition  hover:bg-primary-alta rounded-lg flex justify-center items-center text-white">Log In</button>

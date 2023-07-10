@@ -39,7 +39,7 @@ const Navbar = () => {
               </ul>
           </div>
         <div className="flex items-center">
-                  <Input className="hidden lg:flex" style={{ backgroundColor: "transparent", color: "#acacac", width: "280px" }} size="large" placeholder="Search Here" suffix={<SearchOutlined style={{ color: "#acacac" }} />} />
+                  <Input className="hidden lg:flex"  size="large" placeholder="Search Here" suffix={<SearchOutlined style={{ color: "#acacac" }} />} />
                   <span className="lg:hidden rounded-full border border-gray-border w-[40px] h-[40px] flex justify-center items-center ml-3 cursor-pointer">
                       <SearchOutlined style={{ color: "#acacac" }} />
               </span> 

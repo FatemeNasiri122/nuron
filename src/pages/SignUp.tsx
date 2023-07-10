@@ -46,7 +46,7 @@ const SignUp = (props: Props) => {
                             required: "First name is required",
                         })} />
                       {errors.firstName?.message && (
-                            <small className="block text-[red]">{errors.firstName.message}</small>
+                            <small className="block text-[red]">{errors?.firstName?.message}</small>
                       )}
                       <label className="dark:text-color-body text-color-light-body pt-4" htmlFor="">Last name</label>
                       <input type="text" className='input'
@@ -54,7 +54,7 @@ const SignUp = (props: Props) => {
                             required: "Last name is required",
                         })} />
                       {errors.firstName?.message && (
-                            <small className="block text-[red]">{errors.lastName.message}</small>
+                            <small className="block text-[red]">{errors?.lastName?.message}</small>
                        )}
                       <label className="dark:text-color-body text-color-light-body pt-4" htmlFor="">Email address</label>
                       <input type="email" className='input'
@@ -69,7 +69,7 @@ const SignUp = (props: Props) => {
                         },
                       })} />
                       {errors.email?.message && (
-                            <small className="block text-[red]">{errors.email.message}</small>
+                            <small className="block text-[red]">{errors?.email?.message}</small>
                        )}
                       <label className="dark:text-color-body text-color-light-body pt-4" htmlFor="">Create password</label>
                       <input type="password" className='input'
@@ -77,7 +77,7 @@ const SignUp = (props: Props) => {
                         required: "Password is required"})} 
                       />
                       {errors.password?.message && (
-                            <small className="block text-[red]">{errors.password.message}</small>
+                            <small className="block text-[red]">{errors?.password?.message}</small>
                       )}
                       <label className="dark:text-color-body text-color-light-body pt-4" htmlFor="">Re password</label>
                       <input type="password" className='input'
@@ -85,17 +85,21 @@ const SignUp = (props: Props) => {
                         required: "Re   password is required"})} 
                       />
                       {errors.password?.message && (
-                            <small className="block text-[red]">{errors.rePassword.message}</small>
+                            <small className="block text-[red]">{errors?.rePassword?.message}</small>
                       )}
                       {!validPass && (
                             <small className="block text-[red]">password and re pasword does not match</small>
                        )}
-                      <div className="mt-6">
-                          <Checkbox className='text-color-light-body dark:text-color-body text-xs'>Remember me leter</Checkbox>
+                      <div className="flex items-center mb-4">
+                          <input {...register("terms", { required: "Last name is required", })} id="default-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
+                        <label htmlFor="default-checkbox" className="ml-2 text-sm dark:text-color-body text-color-light">Allow to all tearms & condition</label>
                       </div>
+                      {errors.password?.message && (
+                            <small className="block text-[red]">{errors?.terms?.message}</small>
+                      )}
                       <div className="flex mt-6">
-                          <button type="submit" className="w-[90px] h-[45px] bg-color-primary transition  hover:bg-primary-alta rounded-lg flex justify-center items-center text-white">Log In</button>
-                          <button type="submit" className="w-[90px] h-[45px] hover:bg-color-primary transition bg-primary-alta rounded-lg flex justify-center items-center text-white ml-6">Sign Up</button>
+                          <button type="submit" className="w-[90px] h-[45px] bg-color-primary transition  hover:bg-primary-alta rounded-lg flex justify-center items-center text-white">Sign Up</button>
+                          <button type="submit" className="w-[90px] h-[45px] hover:bg-color-primary transition bg-primary-alta rounded-lg flex justify-center items-center text-white ml-6">Log In</button>
                       </div>
                   </form>
               </div>
