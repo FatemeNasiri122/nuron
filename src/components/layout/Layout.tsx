@@ -1,6 +1,7 @@
 import React from 'react'
 import Navbar from './Navbar'
 import { Outlet } from 'react-router-dom';
+import { Footer } from './Footer';
 
 function Layout() {
 
@@ -9,10 +10,11 @@ function Layout() {
           <Navbar/>
           <div className='max-w-[1420px] m-auto px-4 md:px-9 xl:px-0'>
             <React.Suspense fallback={null}>
-                <Outlet/>
+              <Outlet/>
             </React.Suspense>
           </div>
-        </div>
+          <Footer />
+    </div>
   )
 }
 

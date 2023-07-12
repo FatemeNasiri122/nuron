@@ -12,7 +12,8 @@ export default {
       }
     },
     colors: {
-      "white":"#fff",
+      "white": "#fff",
+      "black": "#000",
       "gray-border": "#2b2b33",
       "background-dark": "#13131d",
       "color-body": "#acacac",

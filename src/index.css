@@ -4,7 +4,7 @@
 
 @layer components {
   .input {
-    @apply w-full rounded-md border border-color-border bg-color-gray-2 dark:bg-background-color-4 p-3 my-5  outline-none focus:border-color-primary focus:ring-0 dark:text-white;
+    @apply w-full rounded-md border border-color-border bg-color-gray-2 dark:bg-background-color-4 p-3 my-2.5  outline-none focus:border-color-primary focus:ring-0 dark:text-white;
   }
   .another-login {
     @apply w-full rounded-md border border-color-border  bg-color-gray-2 dark:bg-background-color-4 p-3 my-5 dark:hover:bg-primary-alta dark:text-white flex items-center;
