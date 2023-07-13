@@ -6,7 +6,31 @@
   .input {
     @apply w-full rounded-md border border-color-border bg-color-gray-2 dark:bg-background-color-4 p-3 my-2.5  outline-none focus:border-color-primary focus:ring-0 dark:text-white;
   }
+  .input-logo {
+    @apply rounded-md border border-color-border bg-color-gray-2 dark:bg-background-color-4 p-2   outline-none focus:border-color-primary focus:ring-0 dark:text-color-body;
+  }
   .another-login {
     @apply w-full rounded-md border border-color-border  bg-color-gray-2 dark:bg-background-color-4 p-3 my-5 dark:hover:bg-primary-alta dark:text-white flex items-center;
   }
+  .error-text {
+    @apply block w-full text-[red] mb-2;
+  }
+  .check-box {
+    @apply w-4 h-4  rounded;
+  }
+  .logo-container {
+    @apply w-[40px] h-[40px] rounded-full flex justify-center items-center dark:bg-background-color-4 bg-color-gray-2;
+  }
+  .logo-inside {
+    @apply w-full h-full rounded-full flex justify-center items-center hover:bg-color-primary hover:text-white;
+  }
+  .icon-container {
+    @apply inline-block p-3 rounded-full flex justify-center items-center border dark:border-color-border cursor-pointer dark:text-color-body text-color-light-body;
+  }
+}
+
+@layer utilities {
+    .rgba {
+      background: rgba(0, 0, 0, 0.8);
+    }
 }
