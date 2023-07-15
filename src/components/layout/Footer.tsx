@@ -1,18 +1,21 @@
-import React from 'react';
 import logoDark from "../../assets/images/logo/logo-dark.png";
-import logoLight from "../../assets/images/logo/logo-white.png";
+import logoWhite from "../../assets/images/logo/logo-white.png";
 import { Link } from 'react-router-dom';
+import useDarkSide from "../theme/useDarkSide";
 import profolio1 from "../../assets/images/portfolio/portfolio-01.jpg"; 
 import profolio2 from "../../assets/images/portfolio/portfolio-02.jpg";
 import profolio3 from "../../assets/images/portfolio/portfolio-03.jpg";
 import { TbBrandFacebook, TbMail, TbBrandTwitter,TbBrandInstagram, TbBrandLinkedin } from "react-icons/tb";  
 
 const Footer = () => {
+
+  const [colorTheme, setTheme] = useDarkSide();
+
   return (
     <footer className="dark:bg-background-color-1 px-8 xl:px-1">
           <div className="py-24 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 max-w-[1420px] m-auto justify-between">
               <div className="mr-12">
-                  <img className="h-[40px] w-[120px]" src={logoLight} alt="logo" />
+                  <img className="h-[40px] w-[120px]" src={colorTheme === "light" ? logoWhite : logoDark} alt="logo" />
                   <p className="dark:text-color-body text-color-light-body mt-5 border-b border-b-black pb-8 gap-4 justify-between">Created with the collaboration of over 60 of the world's best Nuron Artists.</p>
                   <p className="dark:text-white mt-5">Get The Latest Nuron Updates</p>
                   <div className="flex mt-5"> 

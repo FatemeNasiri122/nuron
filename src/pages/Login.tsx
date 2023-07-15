@@ -2,16 +2,16 @@ import { useForm } from 'react-hook-form';
 import { useLoginUserMutation } from '../services/authApi';
 import {useEffect, useState} from "react"
 import { useAppDispatch } from '../app/hooks';
-import { setUser } from '../features/auth/authSlice';
+import { setLoginUser } from '../features/auth/authSlice';
+import { useNavigate } from 'react-router-dom';
 
-type Props = {}
 
-const Login = (props: Props) => {
+const Login = () => {
   
-
     const [loginUser, { data, isSuccess, isError, isLoading, error }] = useLoginUserMutation();
     const dispatch = useAppDispatch();
     const [incorrectEmailOrPassword, setIncorrectEmailOrPassword] = useState("");
+    const navigate = useNavigate();
 
     const {
         register,
@@ -21,14 +21,16 @@ const Login = (props: Props) => {
 
     const submitData = async (data: object) => {
         console.log(data);
-        await loginUser({ email : data.email, password: data.password });
+        await loginUser({ email : data.email , password: data.password });
     }
 
     useEffect(() => {
         // ?!
         if (isSuccess) {
-            debugger
-            dispatch(setUser({ token: data.token, name: data.name }));
+            debugger;
+            console.log(data);
+            dispatch(setLoginUser({ token: data.token }));
+            navigate("/");
         }
         console.log(error);
         if (error?.data?.userOrPassword) {
@@ -104,4 +106,4 @@ const Login = (props: Props) => {
   )
 }
 
-export default Login
+export default Login;

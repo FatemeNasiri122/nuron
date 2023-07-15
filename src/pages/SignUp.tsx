@@ -1,21 +1,16 @@
 import { useState, useEffect } from "react";
-import { Checkbox } from 'antd';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { useGetUserMutation, useSignupUserMutation } from "../services/authApi";
-import { useAppDispatch } from "../app/hooks";
-import { setUser } from '../features/auth/authSlice';
+import { useSignupUserMutation } from "../services/authApi";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
   
-type Props = {}
-
-const SignUp = (props: Props) => {
+const SignUp = () => {
     const notify = () => { toast.success('The registration operation was completed successfully', {
         theme: "colored",
     });}
 
     const [signupUser, { data, isSuccess, isError, isLoading, error }] = useSignupUserMutation();
-    const dispatch = useAppDispatch();
 
     const [validPass, setValidPass] = useState(true);
 
@@ -26,6 +21,8 @@ const SignUp = (props: Props) => {
         handleSubmit,
         formState: { errors },
     } = useForm();
+
+    const navigate = useNavigate();
 
     const submitForm = async (data: object) => {
         
@@ -40,13 +37,12 @@ const SignUp = (props: Props) => {
     }
 console.log(error);
      useEffect(() => {
-        // ?!
-         
+        // ?! 
          if (isSuccess) {
              debugger;
-             console.log(data)
-             dispatch(setUser({ token: data.token, name: data.name }));
+             console.log(data);
              notify();
+             navigate("/login");
          }
          if (error?.status === 400) {
              setUserExist(error?.data?.userExist);
@@ -166,14 +162,14 @@ console.log(error);
                         <label htmlFor="default-checkbox" className="ml-2 text-sm dark:text-color-body text-color-light">Allow to all tearms & condition</label>
                       </div>
                       {errors.agree?.message && (
-                            <small className="block text-[red]">{errors?.agree?.message}</small>
+                            <small className="error-text">{errors?.agree?.message}</small>
                       )}
                       {userExist && (
-                            <small className="block text-[red]">{userExist}</small>
+                            <small className="error-text">{userExist}</small>
                       )}
                       <div className="flex mt-6">
                           <button type="submit" className="w-[90px] h-[45px] bg-color-primary transition  hover:bg-primary-alta rounded-lg flex justify-center items-center text-white">Sign Up</button>
-                          <button className="w-[90px] h-[45px] hover:bg-color-primary transition bg-primary-alta rounded-lg flex justify-center items-center text-white ml-6">Log In</button>
+                          <Link to="/login" className="w-[90px] h-[45px] hover:bg-color-primary transition bg-primary-alta rounded-lg flex justify-center items-center text-white ml-6">Log In</Link>
                       </div>
                   </form>
               </div>

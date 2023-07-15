@@ -1,35 +1,39 @@
-// features/auth/authSlice.js
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '../../app/store';
 
-export interface AuthSlice {
-  name: string | null,
+const initialState: {
   token: string | null,
-}
-
-const initialState = {
-  loading: false,
-  name: null, // for user object
-  token: null, // for storing the JWT
-  error: null,
-  success: false, // for monitoring the registration process.
+  tokenDuration: number | null
+} = {
+  token: null,
+  tokenDuration: null,
 }
 
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setUser: (state, action: PayloadAction<{ name: string, token: string }>) => {
-      localStorage.setItem("user", JSON.stringify({
-        name: action.payload.name,
-        token: action.payload.token,
-      }));
-      state.name = action.payload.name;
+    setLoginUser: (state, action: PayloadAction<{ token : any }>) => {
       state.token = action.payload.token;
+      const expiration = new Date();
+      expiration.setHours(expiration.getHours() + 336);
+      localStorage.setItem("expiration", expiration.toISOString());
+      localStorage.setItem("tokenDetails", action.payload.token);
     },
-    logout: (state) => {
-      localStorage.clear();
-      state.name = null;
+    setTokenDuration: () => {
+      debugger
+      const storedExpirationDate :  any = localStorage.getItem("expiration");
+      const expirationDate = new Date(storedExpirationDate);
+      const now = new Date();
+      const duration = expirationDate.getTime() - now.getTime();
+      const tokenDuration = String(duration);
+      localStorage.setItem("tokenDuration", tokenDuration);
+    },
+    setLogout: (state) => {
+      debugger
+      localStorage.removeItem("expiration");
+      localStorage.removeItem("tokenDetails");
+      localStorage.removeItem("tokenDuration");
       state.token = null;
     }
   },
@@ -38,6 +42,6 @@ const authSlice = createSlice({
 
 export const selectAuth = (state: RootState) => state.auth;
 
-export const { setUser } = authSlice.actions;
+export const { setLoginUser, setTokenDuration, setLogout } = authSlice.actions;
 
 export default authSlice.reducer;

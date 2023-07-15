@@ -13,7 +13,7 @@
     @apply w-full rounded-md border border-color-border  bg-color-gray-2 dark:bg-background-color-4 p-3 my-5 dark:hover:bg-primary-alta dark:text-white flex items-center;
   }
   .error-text {
-    @apply block w-full text-[red] mb-2;
+    @apply block w-full text-[#ff3333] dark:text-[#ff9494] mb-2 tracking-wider;
   }
   .check-box {
     @apply w-4 h-4  rounded;
