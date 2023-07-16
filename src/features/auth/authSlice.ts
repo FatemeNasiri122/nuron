@@ -21,7 +21,6 @@ const authSlice = createSlice({
       localStorage.setItem("tokenDetails", action.payload.token);
     },
     setTokenDuration: () => {
-      debugger
       const storedExpirationDate :  any = localStorage.getItem("expiration");
       const expirationDate = new Date(storedExpirationDate);
       const now = new Date();
@@ -30,7 +29,7 @@ const authSlice = createSlice({
       localStorage.setItem("tokenDuration", tokenDuration);
     },
     setLogout: (state) => {
-      debugger
+    
       localStorage.removeItem("expiration");
       localStorage.removeItem("tokenDetails");
       localStorage.removeItem("tokenDuration");

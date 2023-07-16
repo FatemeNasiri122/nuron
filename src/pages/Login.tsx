@@ -27,7 +27,6 @@ const Login = () => {
     useEffect(() => {
         // ?!
         if (isSuccess) {
-            debugger;
             console.log(data);
             dispatch(setLoginUser({ token: data.token }));
             navigate("/");

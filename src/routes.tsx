@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import {Route, Routes as RRDRoutes, Navigate} from "react-router-dom";
 import { setLogout, setTokenDuration } from "./features/auth/authSlice";
 import { useAppDispatch } from "./app/hooks";
+import axios from "axios";
 
 const Layout = React.lazy(() => import("./components/layout/Layout"));
 const Home = React.lazy(() => import("./pages/Home"));
@@ -14,25 +15,33 @@ const NotFound = React.lazy(() => import("./pages/NotFound"));
 const Routes = () => {
     // const isLoggedIn = useSelector((state: any) => state.auth.isLoggedIn);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const tokenDuration :any = localStorage.getItem("tokenDuration");
     const token = localStorage.getItem("tokenDetails");
     const dispatch = useAppDispatch();
+
+    const validToken = () => {
+        console.log("called api")
+        axios.get("http://localhost:3000/user/me", {
+            headers: {
+                "Authorization": `${token}`,
+            }
+        }).then((res) => {
+            console.log(res);
+            setIsLoggedIn(true);
+        }).catch((err) => {
+            dispatch(setLogout());
+            setIsLoggedIn(false)
+            console.log(err)
+        })
+    }
     
     useEffect(() => {
+        console.log("called");
         if (!token) {
-            debugger
             return;
         }
-        dispatch(setTokenDuration());
-        console.log(tokenDuration);
-        if (+tokenDuration < 0) {
-            debugger
-            dispatch(setLogout());
-        } else {
-            setIsLoggedIn(true);
-        }
-
-    }, [tokenDuration]);
+        validToken();
+        
+    }, [token]);
 
     return (
         <RRDRoutes>

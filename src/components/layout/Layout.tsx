@@ -3,7 +3,7 @@ import Navbar from './Navbar'
 import { Outlet } from 'react-router-dom';
 import  Footer  from './Footer';
 
-function Layout() {
+const  Layout =() => {
 
   return (
     <div className='dark:bg-background-dark bg-[#ECEFF1]' >
