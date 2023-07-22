@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import {Route, Routes as RRDRoutes, Navigate} from "react-router-dom";
-import { setLogout, setTokenDuration } from "./features/auth/authSlice";
 import { useAppDispatch } from "./app/hooks";
-import axios from "axios";
+import { setLogout, setUser } from "./features/auth/authSlice";
+import Contact from "./pages/Contact";
+import { useGetUserQuery } from "./services/userApi";
+import EditProfile from "./pages/EditProfile";
+import { useSelector } from 'react-redux';
 
 const Layout = React.lazy(() => import("./components/layout/Layout"));
 const Home = React.lazy(() => import("./pages/Home"));
@@ -11,42 +13,37 @@ const Login = React.lazy(() => import("./pages/Login"));
 const SignUp = React.lazy(() => import("./pages/SignUp"));
 const NotFound = React.lazy(() => import("./pages/NotFound"));
 
-
 const Routes = () => {
     // const isLoggedIn = useSelector((state: any) => state.auth.isLoggedIn);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const token = localStorage.getItem("tokenDetails");
     const dispatch = useAppDispatch();
-
-    const validToken = () => {
-        console.log("called api")
-        axios.get("http://localhost:3000/user/me", {
-            headers: {
-                "Authorization": `${token}`,
-            }
-        }).then((res) => {
-            console.log(res);
-            setIsLoggedIn(true);
-        }).catch((err) => {
-            dispatch(setLogout());
-            setIsLoggedIn(false)
-            console.log(err)
-        })
-    }
-    
+    const { isError, isSuccess, data, error } = useGetUserQuery({ refetchOnMountOrArgChange: true });
+    console.log(data);
     useEffect(() => {
         console.log("called");
         if (!token) {
             return;
         }
-        validToken();
-        
-    }, [token]);
+        if (isSuccess) {
+            setIsLoggedIn(true);
+            console.log(data);
+            dispatch(setUser(data));
+        }
+        if (isError) {
+            setIsLoggedIn(false);
+            dispatch(setLogout());
+        }
+    }, [isError, isSuccess]);
+
+    console.log(isLoggedIn);
 
     return (
         <RRDRoutes>
             <Route path='/' element={<Layout/>}>
-                <Route index element={<Home />}/>
+                <Route index element={<Home />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/edit-profile" element={isLoggedIn && <EditProfile /> } />
                 <Route path="/login" element={ isLoggedIn ? <Navigate to='/' /> : <Login />} />
                 <Route path='/signup' element={ isLoggedIn ? <Navigate to='/' /> : <SignUp />} />
             </Route>

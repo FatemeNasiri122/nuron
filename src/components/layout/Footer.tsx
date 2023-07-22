@@ -12,7 +12,7 @@ const Footer = () => {
   const [colorTheme, setTheme] = useDarkSide();
 
   return (
-    <footer className="dark:bg-background-color-1 px-8 xl:px-1">
+    <footer className="dark:bg-background-color-1 bg-white px-8 xl:px-1">
           <div className="py-24 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 max-w-[1420px] m-auto justify-between">
               <div className="mr-12">
                   <img className="h-[40px] w-[120px]" src={colorTheme === "light" ? logoWhite : logoDark} alt="logo" />

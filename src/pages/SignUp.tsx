@@ -1,14 +1,20 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { useSignupUserMutation } from "../services/authApi";
+import { useSignupUserMutation } from "../services/norunApi";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { setUser } from "../features/auth/authSlice";
+import { useAppDispatch } from "../app/hooks";
+import TitlePage from '../components/TitlePage';
   
 const SignUp = () => {
     const notify = () => { toast.success('The registration operation was completed successfully', {
         theme: "colored",
-    });}
+    });
+    }
+    
+    const dispatch = useAppDispatch();
 
     const [signupUser, { data, isSuccess, isError, isLoading, error }] = useSignupUserMutation();
 
@@ -31,11 +37,11 @@ const SignUp = () => {
         } else {
             setValidPass(true);
             await signupUser({ firstName: data.firstName, lastName: data.lastName, email: data.email, password: data.password, rePassword: data.rePassword, agree: data.agree });
+            dispatch(setUser(data));
             console.log(data);
             console.log(data,isSuccess,isError,isLoading,error)
         }
     }
-console.log(error);
      useEffect(() => {
         // ?! 
          if (isSuccess) {
@@ -55,14 +61,7 @@ console.log(error);
   return (
       <>
           <ToastContainer />
-          <div className="py-11 flex flex-col sm:flex-row items-center sm:justify-between border-b dark:border-b-gray-border border-b-color-border-white">
-              <span className="inline-block sm:text-xl font-bold dark:text-white"> Sign up</span>
-              <span className="mt-2 sm:mt-0">
-                  <span className="dark:text-color-body text-color-light-body">Home</span>
-                  <span className="dark:text-color-body text-color-light-body mx-3">{" > "}</span>
-                  <span className="dark:text-white">Sign up</span>  
-              </span>
-          </div>
+          <TitlePage title="Sign Up" />
           <div className="py-20 lg:w-1/2 m-auto">
               <div className='border dark:border-gray-border border-color-border p-6 rounded-md bg-white dark:bg-background-color-2'>
                   <p className="sm:text-2xl font-bold dark:text-white mb-5">Sign up</p>
@@ -96,7 +95,7 @@ console.log(error);
                             message: "last name must have at most 128 characters"
                         }
                         })} />
-                      {errors.firstName?.message && (
+                      {errors.lastName?.message && (
                             <small className="error-text">{errors?.lastName?.message}</small>
                        )}
                       <label className="dark:text-color-body text-color-light-body pt-4" htmlFor="">Email address</label>

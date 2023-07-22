@@ -1,20 +1,9 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-export const authApi = createApi({
-    reducerPath: "authApi",
+export const norunApi = createApi({
+    reducerPath: "norunApi",
     baseQuery: fetchBaseQuery({
-        baseUrl: "http://localhost:3000",
-        // credentials: "include",
-        // prepareHeaders: (headers, { getState }) => {
-        //     const token = getState().auth.token
-        //     console.log(token);
-            
-        //     if (token) {
-        //         headers.set("authorization", `Bearer ${token}`);
-        //     }
-
-        //     return headers;
-        // }
+        baseUrl: `${import.meta.env.VITE_APP_URL}`,
     }),
     endpoints: (builder) => ({
         loginUser: builder.mutation({
@@ -35,10 +24,17 @@ export const authApi = createApi({
                 }
             }
         }),
-        getUser: builder.mutation({
-            query: () => "/signup"
-        })
+        contactUs: builder.mutation({
+            query: (body) => {
+                console.log(body);
+                return {
+                    url: "/contact-us",
+                    method: "post",
+                    body,
+                }
+            }
+        }),
     })
 })
 
-export const { useLoginUserMutation, useSignupUserMutation, useGetUserMutation } = authApi 
+export const { useLoginUserMutation, useSignupUserMutation, useContactUsMutation } = norunApi 

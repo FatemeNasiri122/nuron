@@ -27,6 +27,15 @@
   .icon-container {
     @apply inline-block p-3 rounded-full flex justify-center items-center border dark:border-color-border cursor-pointer dark:text-color-body text-color-light-body;
   }
+  .btn {
+    @apply h-[45px] bg-color-primary transition  hover:bg-primary-alta rounded-lg flex justify-center items-center text-white;
+  }
+  .btn1 {
+    @apply w-full border border-color-border hover:bg-color-primary rounded-md hover:text-[white] dark:hover:bg-[#212e48] flex items-center dark:text-white p-3 mb-3 transition duration-150;
+  }
+  .btn1-active {
+    @apply dark:bg-[#212e48] bg-[#00a3ff] text-[#fff];
+  }
 }
 
 @layer utilities {

@@ -28,6 +28,7 @@ export default {
       "color-light-body": "#65676b",
       "color-border-white": "#00000024",
       "color-gray-2": "#f5f8fa",
+      "light-gray": "#828283",
     }
   },
   plugins: [
