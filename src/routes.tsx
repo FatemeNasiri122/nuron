@@ -5,7 +5,8 @@ import { setLogout, setUser } from "./features/auth/authSlice";
 import Contact from "./pages/Contact";
 import { useGetUserQuery } from "./services/userApi";
 import EditProfile from "./pages/EditProfile";
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
+import { RootState } from "./app/store";
 
 const Layout = React.lazy(() => import("./components/layout/Layout"));
 const Home = React.lazy(() => import("./pages/Home"));
@@ -14,8 +15,7 @@ const SignUp = React.lazy(() => import("./pages/SignUp"));
 const NotFound = React.lazy(() => import("./pages/NotFound"));
 
 const Routes = () => {
-    // const isLoggedIn = useSelector((state: any) => state.auth.isLoggedIn);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const isLogin = useSelector((state: RootState) => state.auth.isLogin)
     const token = localStorage.getItem("tokenDetails");
     const dispatch = useAppDispatch();
     const { isError, isSuccess, data, error } = useGetUserQuery({ refetchOnMountOrArgChange: true });
@@ -26,26 +26,25 @@ const Routes = () => {
             return;
         }
         if (isSuccess) {
-            setIsLoggedIn(true);
             console.log(data);
             dispatch(setUser(data));
         }
         if (isError) {
-            setIsLoggedIn(false);
             dispatch(setLogout());
         }
     }, [isError, isSuccess]);
 
-    console.log(isLoggedIn);
+    console.log(isLogin);
 
     return (
         <RRDRoutes>
-            <Route path='/' element={<Layout/>}>
+            <Route path='/' element={<Layout />}>
+                
                 <Route index element={<Home />} />
                 <Route path="/contact" element={<Contact />} />
-                <Route path="/edit-profile" element={isLoggedIn && <EditProfile /> } />
-                <Route path="/login" element={ isLoggedIn ? <Navigate to='/' /> : <Login />} />
-                <Route path='/signup' element={ isLoggedIn ? <Navigate to='/' /> : <SignUp />} />
+                <Route path="/user/edit-profile" element={isLogin && <EditProfile /> } />
+                <Route path="/login" element={ isLogin ? <Navigate to='/' /> : <Login />} />
+                <Route path='/signup' element={ isLogin ? <Navigate to='/' /> : <SignUp />} />
             </Route>
             <Route path="*" element={<NotFound />} />
             

@@ -1,29 +1,11 @@
 import React, {useEffect} from 'react';
 import { useForm } from "react-hook-form";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { useContactUsMutation } from '../../services/norunApi';
+import { useAppDispatch } from '../../app/hooks';
+import { showErrorNotification, showSuccessNotification } from '../../features/notifSlice';
 
 const ContactForm = () => {
-
-  const notify = () => { toast.success('Your message has been sent successfully', {
-        theme: "colored",
-  });
-  }
-
-  const notifyError = () => {
-    toast.error('Your message was not sent successfully', {
-    position: "top-right",
-    autoClose: 5000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    theme: "colored",
-    });   
-  }
-
+  const dispatch = useAppDispatch();
     const {
         register,
         handleSubmit,
@@ -39,28 +21,15 @@ const ContactForm = () => {
   
   useEffect(() => {
     if (isSuccess) {
-      notify();
+      dispatch(showSuccessNotification());
       reset();
     }
     if (isError) {
-      notifyError();
+      dispatch(showErrorNotification());
     }
   },[isSuccess,isError])
 
   return (
-    <>
-      <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="colored"
-          />
     <div className="p-7 bg-white dark:bg-background-color-1 rounded-md lg:w-1/2">
       <h3 className="dark:text-white text-[32px] font-bold mb-8">Contact Us</h3>
      <form onSubmit={handleSubmit((data) => submitForm(data))} noValidate>
@@ -143,7 +112,6 @@ const ContactForm = () => {
                      <button type="submit" className="w-[140px] h-[45px] bg-color-primary transition  hover:bg-primary-alta rounded-lg flex justify-center items-center text-white">Send Message</button>
       </form>
     </div>
-    </>
     
   )
 }

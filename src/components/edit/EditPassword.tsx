@@ -1,15 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from "react-hook-form";
 import { useSetEditPasswordMutation } from '../../services/userApi';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { useAppDispatch } from '../../app/hooks';
+import { showSuccessNotification } from '../../features/notifSlice';
+import ToastLayout from '../layout/ToastLayout';
 
 const EditPassword = () => {
-  const notify = () => { toast.success('Password changed successfully', {
-        theme: "colored",
-  });
-  }
-
+  const dispatch = useAppDispatch();
   const [setEditPassword, { isError, isSuccess, error }] = useSetEditPasswordMutation();
   const [incorrectOldPassword, setIncorrectOldPassword] = useState("");
   const [matchPassword, setMatchPassword] = useState("");
@@ -33,7 +30,7 @@ const EditPassword = () => {
   
   useEffect(() => {
     if (isSuccess) {
-      notify();
+      dispatch(showSuccessNotification());
       reset();
     }
     if (isError && error?.status === 400) {
@@ -42,19 +39,7 @@ const EditPassword = () => {
   }, [isError, isSuccess]);
 
   return (
-    <>
-      <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="colored"
-          />
+    <ToastLayout>
       <div className="p-6 border border-color-border rounded-md bg-white dark:bg-background-color-1">
       <h1 className="dark:text-white text-xl font-bold">Create Your Password</h1>
       <p className="dark:text-color-body text-color-light-body my-3 border-b border-b-light-gray dark:border-b-gray-border pb-5">Passwords are a critical part of information and network security. Passwords serve to protect user accounts but a poorly chosen password, if compromised, could put the entire network at risk.</p>
@@ -130,7 +115,7 @@ const EditPassword = () => {
         </div>  
       </form>
     </div>
-  </>
+  </ToastLayout>
     
   )
 }

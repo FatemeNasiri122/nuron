@@ -1,22 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
 import { useSelector } from 'react-redux';
+import { RootState } from '../../app/store';
 import { useSetEditProfileInformationMutation } from '../../services/userApi';
 import { useAppDispatch } from '../../app/hooks';
 import { setUser } from '../../features/auth/authSlice';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import ToastLayout from '../layout/ToastLayout';
+import { showErrorNotification, showSuccessNotification } from '../../features/notifSlice';
 
 const EditPersonalInformation = () => {
-  const notify = () => { toast.success('The information was edited successfully', {
-        theme: "colored",
-  });
-  }
-  const user = useSelector(state => state.auth.user);
+  const user = useSelector((state:RootState) => state.auth.user);
   console.log(user)
   const [setEditProfileInformation, { isError, isSuccess, error }] = useSetEditProfileInformationMutation();
   const dispatch = useAppDispatch();
-  const [editedUser, setEditedUser] = useState();
+  const [editedUser, setEditedUser] = useState({});
 
   const {
         register,
@@ -35,28 +32,15 @@ const EditPersonalInformation = () => {
       const { firstName: first_name, lastName: last_name, phoneNumber: phone_number, ...other } = editedUser;
       const newUser = { ...user, first_name, last_name, phone_number, ...other };
       dispatch(setUser(newUser));
-      notify();
+      dispatch(showSuccessNotification());
     }
     if (isError) {
-      console.log(error);
+      dispatch(showErrorNotification());
     }
   }, [isError, isSuccess]);
-  console.log(isDirty);
   
   return (
-    <>
-      <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="colored"
-          />
+    <ToastLayout>
     <div className="p-6 border border-color-border rounded-md">
         <form onSubmit={handleSubmit((data) => submitForm(data))} noValidate>
         <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-3">
@@ -244,7 +228,7 @@ const EditPersonalInformation = () => {
         </div>  
       </form>
     </div>
-    </>
+    </ToastLayout>
     
   )
 }

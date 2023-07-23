@@ -6,11 +6,14 @@ import { setLoginUser, setUser } from '../features/auth/authSlice';
 import { Link, useNavigate } from 'react-router-dom';
 import { useGetUserQuery } from '../services/userApi';
 import TitlePage from '../components/TitlePage';
+import { useSelector } from 'react-redux';
 
 const Login = () => {
   
-    const [loginUser, { data : userData, isSuccess, isError, isLoading, error }] = useLoginUserMutation();
+    const [loginUser, { data: userData, isSuccess: userSuccess, isError: userError, error }] = useLoginUserMutation();
     const dispatch = useAppDispatch();
+    const {user, token} = useSelector(state => state.auth);
+    console.log(user);
     const [incorrectEmailOrPassword, setIncorrectEmailOrPassword] = useState("");
     const navigate = useNavigate();
 
@@ -24,14 +27,13 @@ const Login = () => {
         console.log(data);
         await loginUser({ email : data.email , password: data.password });
     }
-    // const {data} = useGetUserQuery({ refetchOnMountOrArgChange: true });
+    const { isSuccess, data, status } = useGetUserQuery(token);
 
     useEffect(() => {
         // ?!
-        if (isSuccess) {
+        if (userSuccess) {
             console.log(userData);
             dispatch(setLoginUser({ token: userData.token }));
-            navigate("/");
         }
         console.log(error);
         if (error?.data?.userOrPassword) {
@@ -39,8 +41,16 @@ const Login = () => {
         } else {
             setIncorrectEmailOrPassword("");
         }
+    }, [error, userData, userSuccess, userError]);
 
-    }, [isSuccess, error]);
+    useEffect(() => {
+        debugger
+        if (status === "fulfilled") {
+            debugger
+            dispatch(setUser(data));
+            navigate("/")
+        }
+    },[status])
 
   return (
       <>

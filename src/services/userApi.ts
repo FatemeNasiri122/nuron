@@ -20,30 +20,20 @@ export const userApi = createApi({
         }),
         setUploadProfileImage: builder.mutation({
             query: (body) => {
-                const token = localStorage.getItem("tokenDetails");
+                console.log(body.get('profile'))
                 return {
                     url: "/edit/profile-image",
                     method: "post",
                     body,
-                    headers: {
-                        "Content-Type": "multipart/form-data",
-                        "Authorization": `${token}`,
-                    }
                 }
             }
         }),
         setUploadCoverImage: builder.mutation({
             query: (body) => {
-                const token = localStorage.getItem("tokenDetails");
-                console.log(body);
                 return {
                     url: "/edit/cover-image",
                     method: "post",
                     body,
-                    headers: {
-                        "Content-Type": "multipart/form-data",
-                        "Authorization": `${token}`,
-                    }
                 }
             }
         }),

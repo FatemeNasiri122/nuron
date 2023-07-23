@@ -1,14 +1,15 @@
-import React, {useState, useEffect} from 'react';
+import {useState} from 'react';
 import TitlePage from '../components/TitlePage';
 import { Link } from 'react-router-dom';
 import {AiOutlineEye} from "react-icons/ai"
 import { LuEdit } from "react-icons/lu";
 import { GoPerson } from "react-icons/go";
 import { BiLockOpenAlt } from "react-icons/bi";
-import EditProfilePicture from '../components/edit/EditProfilePicture';
 import EditPersonalInformation from '../components/edit/EditPersonalInformation';
-import EditPassword from '../components/edit/EditPassword';
+import EditProfileCover from "../components/edit/EditProfileCover"
+import EditProfileImage from "../components/edit/EditProfileImage"
 import {motion} from "framer-motion";
+import EditPassword from '../components/edit/EditPassword';
 
 const EditProfile = () => {
   const [profileType, setProfileType] = useState(0);
@@ -34,7 +35,10 @@ const EditProfile = () => {
         </nav>
         <div className="w-full lg:w-9/12 bg-white dark:bg-background-color-1">
           {profileType === 0 && <motion.div animate={{ opacity: 1, transition: { duration: 1 } }} initial={{ opacity: 0 }}>
-            <EditProfilePicture />
+            <div className="p-6 border border-color-border rounded-md flex flex-col lg:flex-row">
+              <EditProfileImage />
+              <EditProfileCover />
+            </div>
           </motion.div>}
           {profileType === 1 && <motion.div animate={{ opacity: 1, transition: { duration: 1 } }} initial={{ opacity: 0 }}>
             <EditPersonalInformation />

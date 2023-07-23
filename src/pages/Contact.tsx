@@ -7,11 +7,12 @@ import ContactForm from '../components/contact/ContactForm';
 import Scroll from '../components/animation/Scroll';
 import ContactMap from '../components/contact/ContactMap';
 import TitlePage from '../components/TitlePage';
+import ToastLayout from '../components/layout/ToastLayout';
 
 const Contact = () => {
 
   return (
-    <>
+    <ToastLayout>
       <TitlePage title="Contact With Us" />
       <Scroll>
       <div className='mt-20'>
@@ -65,7 +66,7 @@ const Contact = () => {
         </Scroll>
         </div>
           
-    </>
+    </ToastLayout>
   )
 }
 
